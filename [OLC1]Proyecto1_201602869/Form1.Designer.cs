@@ -46,8 +46,8 @@
             this.manualUsuarioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.manualTecnicoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.acercaDeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.txtArchivo = new System.Windows.Forms.TextBox();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.txtArchivo = new System.Windows.Forms.RichTextBox();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -131,6 +131,7 @@
             this.cargarTablasToolStripMenuItem.Name = "cargarTablasToolStripMenuItem";
             this.cargarTablasToolStripMenuItem.Size = new System.Drawing.Size(272, 26);
             this.cargarTablasToolStripMenuItem.Text = "Cargar Tablas";
+            this.cargarTablasToolStripMenuItem.Click += new System.EventHandler(this.cargarTablasToolStripMenuItem_Click);
             // 
             // verTablasToolStripMenuItem
             // 
@@ -184,24 +185,23 @@
             this.acercaDeToolStripMenuItem.Size = new System.Drawing.Size(187, 26);
             this.acercaDeToolStripMenuItem.Text = "Acerca De";
             // 
-            // txtArchivo
-            // 
-            this.txtArchivo.Location = new System.Drawing.Point(36, 50);
-            this.txtArchivo.Multiline = true;
-            this.txtArchivo.Name = "txtArchivo";
-            this.txtArchivo.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtArchivo.Size = new System.Drawing.Size(569, 526);
-            this.txtArchivo.TabIndex = 1;
-            // 
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
+            // 
+            // txtArchivo
+            // 
+            this.txtArchivo.Location = new System.Drawing.Point(13, 32);
+            this.txtArchivo.Name = "txtArchivo";
+            this.txtArchivo.Size = new System.Drawing.Size(482, 668);
+            this.txtArchivo.TabIndex = 1;
+            this.txtArchivo.Text = "";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1218, 624);
+            this.ClientSize = new System.Drawing.Size(1218, 754);
             this.Controls.Add(this.txtArchivo);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
@@ -234,8 +234,8 @@
         private System.Windows.Forms.ToolStripMenuItem manualUsuarioToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem manualTecnicoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem acercaDeToolStripMenuItem;
-        private System.Windows.Forms.TextBox txtArchivo;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.RichTextBox txtArchivo;
     }
 }
 

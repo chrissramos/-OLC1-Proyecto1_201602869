@@ -38,5 +38,28 @@ namespace _OLC1_Proyecto1_201602869
                 openFileDialog1.Dispose();
             }
         }
+
+        private void cargarTablasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            openFileDialog1.Filter = "CargarTablas (*.sqle)|*.sqle";
+            openFileDialog1.FilterIndex = 2;
+
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                rutaActiva = openFileDialog1.FileName;
+
+                System.IO.StreamReader sr = new System.IO.StreamReader(rutaActiva, System.Text.Encoding.Default);
+                string texto;
+                texto = sr.ReadToEnd();
+                sr.Close();
+                txtArchivo.Text = texto;
+                openFileDialog1.Dispose();
+
+            }
+            else if (openFileDialog1.ShowDialog() == DialogResult.Cancel)
+            {
+                openFileDialog1.Dispose();
+            }
+        }
     }
 }
