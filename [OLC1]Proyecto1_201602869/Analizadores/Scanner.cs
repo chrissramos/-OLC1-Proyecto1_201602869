@@ -14,7 +14,8 @@ namespace _OLC1_Proyecto1_201602869.Analizadores
         public int indice = 0;
         ArrayList listaTokens = new ArrayList();
         ArrayList listaErrores = new ArrayList();
-
+        public int contadorLinea = 0;
+        public int contadorCol = 0;
 
         public void recibeTexto(String texto) {
             String textoLimpio = "";
@@ -37,6 +38,7 @@ namespace _OLC1_Proyecto1_201602869.Analizadores
 
             for (indice = 0; indice < textoLimpio.Length; indice++)
             {
+                contadorCol++;
                 char letra = textoLimpio[indice];
                 int codigoAscii = letra;
                 switch (estado)
@@ -117,12 +119,139 @@ namespace _OLC1_Proyecto1_201602869.Analizadores
                             estado = 9;
                             lexema = "" + letra;
                         }
-                        else if (letra == ' ') {
-
+                        else if (letra == ' ')
+                        {
+                            estado = 0;
+                        }
+                        else if (letra == '\n')
+                        {
+                            contadorLinea++;
+                            estado = 0;
+                        }
+                        else {
+                            // acepto errores 
+                            Objeto.ErrorLS errorLS = new Objeto.ErrorLS();
+                            errorLS.setTipo("Lexico");
+                            errorLS.setLexema("Caracter desconocido del lenguaje");
+                            errorLS.setLinea(contadorLinea);
+                            errorLS.setColumna(contadorCol);
+                            listaErrores.Add(errorLS);
                         }
                         break;
                     case 1:
                         // aqui acepto varios
+                        switch (lexema)
+                        {
+                            
+
+                            case "(":
+                                {
+                                    Objeto.Token tok = new Objeto.Token();
+                                    tok.setNumToken(1);
+                                    tok.setTipo("Parentesis Abierto");
+                                    tok.setLexema(lexema);
+                                    tok.setLinea(contadorLinea);
+                                    tok.setColumna(contadorCol);
+                                    listaTokens.Add(tok);
+                                }
+                                
+                                break;
+                            case ")":
+                                {
+                                    Objeto.Token tok = new Objeto.Token();
+                                    tok.setNumToken(2);
+                                    tok.setTipo("Parentesis Cerrado");
+                                    tok.setLexema(lexema);
+                                    tok.setLinea(contadorLinea);
+                                    tok.setColumna(contadorCol);
+                                    listaTokens.Add(tok);
+                                }
+                                break;
+                            case "=":
+                                {
+                                    Objeto.Token tok = new Objeto.Token();
+                                    tok.setNumToken(3);
+                                    tok.setTipo("Signo igual");
+                                    tok.setLexema(lexema);
+                                    tok.setLinea(contadorLinea);
+                                    tok.setColumna(contadorCol);
+                                    listaTokens.Add(tok);
+                                }
+                                break;
+                            case "*":
+                                {
+                                    Objeto.Token tok = new Objeto.Token();
+                                    tok.setNumToken(4);
+                                    tok.setTipo("Signo asterisco");
+                                    tok.setLexema(lexema);
+                                    tok.setLinea(contadorLinea);
+                                    tok.setColumna(contadorCol);
+                                    listaTokens.Add(tok);
+                                }
+                                break;
+                            case ";":
+                                {
+                                    Objeto.Token tok = new Objeto.Token();
+                                    tok.setNumToken(5);
+                                    tok.setTipo("Punto y coma");
+                                    tok.setLexema(lexema);
+                                    tok.setLinea(contadorLinea);
+                                    tok.setColumna(contadorCol);
+                                    listaTokens.Add(tok);
+                                }
+                                break;
+                            case ",":
+                                {
+                                    Objeto.Token tok = new Objeto.Token();
+                                    tok.setNumToken(6);
+                                    tok.setTipo("Coma");
+                                    tok.setLexema(lexema);
+                                    tok.setLinea(contadorLinea);
+                                    tok.setColumna(contadorCol);
+                                    listaTokens.Add(tok);
+                                }
+                                break;
+                            case "!=":
+                                {
+                                    Objeto.Token tok = new Objeto.Token();
+                                    tok.setNumToken(7);
+                                    tok.setTipo("Signo diferente");
+                                    tok.setLexema(lexema);
+                                    tok.setLinea(contadorLinea);
+                                    tok.setColumna(contadorCol);
+                                    listaTokens.Add(tok);
+                                }
+                                break;
+                            case ">=":
+                                {
+                                    Objeto.Token tok = new Objeto.Token();
+                                    tok.setNumToken(8);
+                                    tok.setTipo("Mayor igual");
+                                    tok.setLexema(lexema);
+                                    tok.setLinea(contadorLinea);
+                                    tok.setColumna(contadorCol);
+                                    listaTokens.Add(tok);
+                                }
+                                break;
+                            case "<=":
+                                {
+                                    Objeto.Token tok = new Objeto.Token();
+                                    tok.setNumToken(9);
+                                    tok.setTipo("Menor igual");
+                                    tok.setLexema(lexema);
+                                    tok.setLinea(contadorLinea);
+                                    tok.setColumna(contadorCol);
+                                    listaTokens.Add(tok);
+                                }
+                                break;
+
+                            default:
+                                break;
+                        }
+                        lexema = "";
+                        estado = 0;
+                        indice--;
+
                         break;
                     case 2:
                         if (letra == '=')
@@ -137,12 +266,37 @@ namespace _OLC1_Proyecto1_201602869.Analizadores
                             estado = 1;
                             lexema = lexema + letra;
                         }
+                        else {
+                            //acepto mayor que
+                            Objeto.Token tok = new Objeto.Token();
+                            tok.setNumToken(10);
+                            tok.setTipo("Mayor que ");
+                            tok.setLexema(lexema);
+                            tok.setLinea(contadorLinea);
+                            tok.setColumna(contadorCol);
+                            listaTokens.Add(tok);
+                            lexema = "";
+                            estado = 0;
+                            indice--;
+                        }
                         break;
                     case 4:
                         if (letra == '=')
                         {
                             estado = 1;
                             lexema = lexema + letra;
+                        }
+                        else {
+                            Objeto.Token tok = new Objeto.Token();
+                            tok.setNumToken(11);
+                            tok.setTipo("Menor que ");
+                            tok.setLexema(lexema);
+                            tok.setLinea(contadorLinea);
+                            tok.setColumna(contadorCol);
+                            listaTokens.Add(tok);
+                            lexema = "";
+                            estado = 0;
+                            indice--;
                         }
                         break;
                     case 5:
@@ -169,7 +323,16 @@ namespace _OLC1_Proyecto1_201602869.Analizadores
                         }
                         else {
                             //acepto numeros normales aqui
-
+                            Objeto.Token tok = new Objeto.Token();
+                            tok.setNumToken(12);
+                            tok.setTipo("Digito sin decimal ");
+                            tok.setLexema(lexema);
+                            tok.setLinea(contadorLinea);
+                            tok.setColumna(contadorCol);
+                            listaTokens.Add(tok);
+                            lexema = "";
+                            estado = 0;
+                            indice--;
 
                         }
                         break;
@@ -180,8 +343,18 @@ namespace _OLC1_Proyecto1_201602869.Analizadores
                             lexema = lexema + letra;
                         }
                         else {
-                           //acepto identificadores aqui 
-
+                            //acepto identificadores aqui 
+                            Objeto.Token tok = new Objeto.Token();
+                            // ver si es palabra reservada
+                            tok.setNumToken(18); 
+                            tok.setTipo("Identificador");
+                            tok.setLexema(lexema);
+                            tok.setLinea(contadorLinea);
+                            tok.setColumna(contadorCol);
+                            listaTokens.Add(tok);
+                            lexema = "";
+                            estado = 0;
+                            indice--;
                         }
                         break;
                     case 8:
@@ -221,6 +394,16 @@ namespace _OLC1_Proyecto1_201602869.Analizadores
                         if (letra == '\n')
                         {
                             // aceptp comentario simple
+                            Objeto.Token tok = new Objeto.Token();
+                            tok.setNumToken(13);
+                            tok.setTipo("Comentario Simple");
+                            tok.setLexema(lexema);
+                            tok.setLinea(contadorLinea);
+                            tok.setColumna(contadorCol);
+                            listaTokens.Add(tok);
+                            lexema = "";
+                            estado = 0;
+                            indice--;
 
                         }
                         else {
@@ -247,6 +430,16 @@ namespace _OLC1_Proyecto1_201602869.Analizadores
                         }
                         else {
                             //acepto digito decimal
+                            Objeto.Token tok = new Objeto.Token();
+                            tok.setNumToken(14);
+                            tok.setTipo("Digito con decimal");
+                            tok.setLexema(lexema);
+                            tok.setLinea(contadorLinea);
+                            tok.setColumna(contadorCol);
+                            listaTokens.Add(tok);
+                            lexema = "";
+                            estado = 0;
+                            indice--;
                         }
                         break;
                     case 16:
@@ -320,12 +513,48 @@ namespace _OLC1_Proyecto1_201602869.Analizadores
                         break;
                     case 26:
                         //acepto fecha 
+                        {
+                            Objeto.Token tok = new Objeto.Token();
+                            tok.setNumToken(15);
+                            tok.setTipo("Fecha ");
+                            tok.setLexema(lexema);
+                            tok.setLinea(contadorLinea);
+                            tok.setColumna(contadorCol);
+                            listaTokens.Add(tok);
+                            lexema = "";
+                            estado = 0;
+                            indice--;
+                        }
                         break;
                     case 27:
                         //acepto comentario multi
+                        {
+                            Objeto.Token tok = new Objeto.Token();
+                            tok.setNumToken(16);
+                            tok.setTipo("Comentario Multilinea ");
+                            tok.setLexema(lexema);
+                            tok.setLinea(contadorLinea);
+                            tok.setColumna(contadorCol);
+                            listaTokens.Add(tok);
+                            lexema = "";
+                            estado = 0;
+                            indice--;
+                        }
                         break;
                     case 28:
-                        //acepto cadenas 
+                        //acepto cadenas
+                        {
+                            Objeto.Token tok = new Objeto.Token();
+                            tok.setNumToken(17);
+                            tok.setTipo("Cadena ");
+                            tok.setLexema(lexema);
+                            tok.setLinea(contadorLinea);
+                            tok.setColumna(contadorCol);
+                            listaTokens.Add(tok);
+                            lexema = "";
+                            estado = 0;
+                            indice--;
+                        }
                         break;
                                    
                     default:
