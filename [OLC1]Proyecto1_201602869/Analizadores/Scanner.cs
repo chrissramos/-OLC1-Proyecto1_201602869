@@ -12,8 +12,8 @@ namespace _OLC1_Proyecto1_201602869.Analizadores
         public String lexema = "";
         public int estado = 0;
         public int indice = 0;
-        ArrayList listaTokens = new ArrayList();
-        ArrayList listaErrores = new ArrayList();
+        public ArrayList listaTokens = new ArrayList();
+        public ArrayList listaErrores = new ArrayList();
         public int contadorLinea = 0;
         public int contadorCol = 0;
 
