@@ -140,7 +140,7 @@ namespace _OLC1_Proyecto1_201602869
 
             ofile.WriteLine("</table>");
             ofile.WriteLine("</center>");
-
+            ofile.WriteLine("<h2 >" + "Cantidad de Tokens: " + scan.listaTokens.Count + " </h2>");
 
             ofile.WriteLine("</body>");
             ofile.WriteLine("</html>");
@@ -217,7 +217,7 @@ namespace _OLC1_Proyecto1_201602869
             ofile.WriteLine("</table>");
             ofile.WriteLine("</center>");
 
-
+            ofile.WriteLine("<h2 >" + "Cantidad de Errores: " + scan.listaErrores.Count + " </h2>");
             ofile.WriteLine("</body>");
             ofile.WriteLine("</html>");
             ofile.Close();
