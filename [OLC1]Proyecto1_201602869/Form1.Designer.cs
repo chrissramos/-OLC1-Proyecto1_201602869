@@ -158,6 +158,7 @@
             this.mostrarErroresToolStripMenuItem.Name = "mostrarErroresToolStripMenuItem";
             this.mostrarErroresToolStripMenuItem.Size = new System.Drawing.Size(272, 26);
             this.mostrarErroresToolStripMenuItem.Text = "Mostrar Errores";
+            this.mostrarErroresToolStripMenuItem.Click += new System.EventHandler(this.mostrarErroresToolStripMenuItem_Click);
             // 
             // ayudaToolStripMenuItem
             // 

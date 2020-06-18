@@ -126,13 +126,14 @@ namespace _OLC1_Proyecto1_201602869.Analizadores
                         else if (letra == '\n')
                         {
                             contadorLinea++;
+                            contadorCol = 0;
                             estado = 0;
                         }
                         else {
                             // acepto errores 
                             Objeto.ErrorLS errorLS = new Objeto.ErrorLS();
                             errorLS.setTipo("Lexico");
-                            errorLS.setLexema("Caracter desconocido del lenguaje");
+                            errorLS.setLexema("Caracter " + letra + " no es parte del lenguaje");
                             errorLS.setLinea(contadorLinea);
                             errorLS.setColumna(contadorCol);
                             listaErrores.Add(errorLS);

@@ -9,6 +9,7 @@ namespace _OLC1_Proyecto1_201602869.Objeto
     class ErrorLS
     {
         String tipo;
+        
         String lexema;
         int linea;
         int columna;
@@ -33,6 +34,8 @@ namespace _OLC1_Proyecto1_201602869.Objeto
         {
             return this.columna;
         }
+
+      
 
         public void setLexema(String lexema)
         {

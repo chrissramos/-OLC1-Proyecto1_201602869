@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -74,7 +75,7 @@ namespace _OLC1_Proyecto1_201602869
         {
             // hacer el html y mostarlo
             StreamWriter ofile;
-            ofile = File.CreateText("/Tokens.html");
+            ofile = File.CreateText("./Tokens.html");
             ofile.WriteLine("<html>");
             ofile.WriteLine("<head>");
             ofile.WriteLine("<style>");
@@ -108,7 +109,7 @@ namespace _OLC1_Proyecto1_201602869
 
             ofile.WriteLine("<body bgcolor= '#00CCFF'>");
             ofile.WriteLine("<center>");
-            ofile.WriteLine("<h1>Tabla Analizador Lexico de archivo 1:</h1>");
+            ofile.WriteLine("<h1>Tokens:</h1>");
             ofile.WriteLine("<table>");
             ofile.WriteLine("<tr>");
             ofile.WriteLine("<th>Token</th> ");
@@ -118,6 +119,108 @@ namespace _OLC1_Proyecto1_201602869
             ofile.WriteLine("<th>Columna</th>");
             ofile.WriteLine("</tr>");
 
+            // datos
+            for (int i = 0; i < scan.listaTokens.Count; i++)
+            {
+                Objeto.Token t = (Objeto.Token)scan.listaTokens[i];
+
+                ofile.WriteLine("<tr>");
+
+                ofile.WriteLine("<td>" + t.getNumToken() + "</td>");
+                ofile.WriteLine("<td>" + t.getTipo() + "</td>");
+                ofile.WriteLine("<td>" + t.getLexema() + "</td>");
+                ofile.WriteLine("<td>" + t.getLinea()+ "</td>");
+                ofile.WriteLine("<td>" + t.getColumna() + "</td>");
+
+                ofile.WriteLine(" </tr>");
+            }
+
+
+            // fin datos
+
+            ofile.WriteLine("</table>");
+            ofile.WriteLine("</center>");
+
+
+            ofile.WriteLine("</body>");
+            ofile.WriteLine("</html>");
+            ofile.Close();
+            
+            //Process.Start(".//Tokens.html");
+
+        }
+
+        private void mostrarErroresToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            StreamWriter ofile;
+            ofile = File.CreateText("./Errores.html");
+            ofile.WriteLine("<html>");
+            ofile.WriteLine("<head>");
+            ofile.WriteLine("<style>");
+            ofile.WriteLine("table {");
+            ofile.WriteLine("width:50%;");
+            ofile.WriteLine("}");
+            ofile.WriteLine("table, th, td {");
+            ofile.WriteLine("border: 1px solid black;");
+            ofile.WriteLine("border-collapse: collapse;");
+            ofile.WriteLine("}");
+            ofile.WriteLine("th, td {");
+            ofile.WriteLine("padding: 5px;");
+            ofile.WriteLine("text-align: left;");
+            ofile.WriteLine("table#t01 tr:nth-child(even) {");
+            ofile.WriteLine(" background-color: #eee;");
+            ofile.WriteLine("}");
+            ofile.WriteLine("table#t01 tr:nth-child(odd) {");
+            ofile.WriteLine("background-color:#fff;");
+            ofile.WriteLine("}");
+            ofile.WriteLine("table#t01 th {");
+            ofile.WriteLine("background-color: black;");
+            ofile.WriteLine("color: white;");
+            ofile.WriteLine("}");
+            ofile.WriteLine("");
+            ofile.WriteLine("");
+            ofile.WriteLine("");
+            ofile.WriteLine("");
+
+            ofile.WriteLine("</style>");
+            ofile.WriteLine("</head>");
+
+            ofile.WriteLine("<body bgcolor= '#00CCFF'>");
+            ofile.WriteLine("<center>");
+            ofile.WriteLine("<h1>Errores:</h1>");
+            ofile.WriteLine("<table>");
+            ofile.WriteLine("<tr>");
+            ofile.WriteLine("<th>Tipo Error</th> ");
+            ofile.WriteLine("<th>Descripcion</th>");
+            ofile.WriteLine("<th>Linea</th>");
+            ofile.WriteLine("<th>Columna</th>");
+            ofile.WriteLine("</tr>");
+
+            // datos
+            for (int i = 0; i < scan.listaErrores.Count; i++)
+            {
+                Objeto.ErrorLS t = (Objeto.ErrorLS)scan.listaErrores[i];
+
+                ofile.WriteLine("<tr>");
+                
+                ofile.WriteLine("<td>" + t.getTipo() + "</td>");
+                ofile.WriteLine("<td>" + t.getLexema() + "</td>");
+                ofile.WriteLine("<td>" + t.getLinea() + "</td>");
+                ofile.WriteLine("<td>" + t.getColumna() + "</td>");
+
+                ofile.WriteLine(" </tr>");
+            }
+
+
+            // fin datos
+
+            ofile.WriteLine("</table>");
+            ofile.WriteLine("</center>");
+
+
+            ofile.WriteLine("</body>");
+            ofile.WriteLine("</html>");
+            ofile.Close();
         }
     }
 }
