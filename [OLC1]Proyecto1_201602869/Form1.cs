@@ -14,7 +14,8 @@ namespace _OLC1_Proyecto1_201602869
 {
     public partial class Form1 : Form
     {
-        Analizadores.Scanner scan = new Analizadores.Scanner();
+        static Analizadores.Scanner scan = new Analizadores.Scanner();
+        static Analizadores.Parser parser = new Analizadores.Parser();
         public Form1()
         {
             InitializeComponent();
@@ -67,8 +68,10 @@ namespace _OLC1_Proyecto1_201602869
 
         private void ejecutarToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            
+            //analisis lexico
             scan.recibeTexto(txtArchivo.Text);
+            // analisis sintactico
+            parser.parsear();
         }
 
         private void mostrarTokensToolStripMenuItem_Click(object sender, EventArgs e)
@@ -120,9 +123,10 @@ namespace _OLC1_Proyecto1_201602869
             ofile.WriteLine("</tr>");
 
             // datos
-            for (int i = 0; i < scan.listaTokens.Count; i++)
+            
+            for (int i = 0; i < Analizadores.Scanner.listaTokens.Count; i++)
             {
-                Objeto.Token t = (Objeto.Token)scan.listaTokens[i];
+                Objeto.Token t = (Objeto.Token)Analizadores.Scanner.listaTokens[i];
 
                 ofile.WriteLine("<tr>");
 
@@ -140,7 +144,7 @@ namespace _OLC1_Proyecto1_201602869
 
             ofile.WriteLine("</table>");
             ofile.WriteLine("</center>");
-            ofile.WriteLine("<h2 >" + "Cantidad de Tokens: " + scan.listaTokens.Count + " </h2>");
+            ofile.WriteLine("<h2 >" + "Cantidad de Tokens: " + Analizadores.Scanner.listaTokens.Count + " </h2>");
 
             ofile.WriteLine("</body>");
             ofile.WriteLine("</html>");

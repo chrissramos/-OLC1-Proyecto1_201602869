@@ -12,12 +12,50 @@ namespace _OLC1_Proyecto1_201602869.Analizadores
         public String lexema = "";
         public int estado = 0;
         public int indice = 0;
-        public ArrayList listaTokens = new ArrayList();
+        public static ArrayList listaTokens = new ArrayList();
         public ArrayList listaErrores = new ArrayList();
+        public ArrayList listaReservadas = new ArrayList();
         public int contadorLinea = 0;
         public int contadorCol = 0;
 
+        public void llenarLista() {
+            listaReservadas.Add("CREAR"); //19
+            listaReservadas.Add("TABLA"); //20
+            listaReservadas.Add("entero");//21
+            listaReservadas.Add("cadena");//22
+            listaReservadas.Add("fecha");//23
+            listaReservadas.Add("flotante");//24
+            listaReservadas.Add("INSERTAR");//25
+            listaReservadas.Add("EN");      //26
+            listaReservadas.Add("VALORES");//27
+            listaReservadas.Add("SELECCIONAR");//28
+            listaReservadas.Add("COMO");//29
+            listaReservadas.Add("DE");//30
+            listaReservadas.Add("DONDE");//31
+            listaReservadas.Add("Y");//32
+            listaReservadas.Add("O");//33
+            listaReservadas.Add("ELIMINAR");//34
+            listaReservadas.Add("ACTUALIZAR");//35
+            listaReservadas.Add("ESTABLECER");//36
+        }
+
+        public Boolean esReservada(String lex) {
+            Boolean resultado = true;
+            int existe = listaReservadas.IndexOf(lex);
+            if (existe != -1)
+            {
+                resultado = true;
+            }
+            else
+            {
+                resultado = false;
+            }
+            return resultado;
+        }
+
+
         public void recibeTexto(String texto) {
+            llenarLista();
             String textoLimpio = "";
             for (int i = 0; i < texto.Length; i++)
             {
@@ -347,8 +385,79 @@ namespace _OLC1_Proyecto1_201602869.Analizadores
                             //acepto identificadores aqui 
                             Objeto.Token tok = new Objeto.Token();
                             // ver si es palabra reservada
-                            tok.setNumToken(18); 
-                            tok.setTipo("Identificador");
+
+                            if (esReservada(lexema).Equals(true))
+                            {
+                                
+                                // si es reservada
+                                tok.setTipo("Palabra Reservada");
+                                switch (lexema.ToUpper())
+                                {
+                                    case "CREAR":
+                                        tok.setNumToken(19);
+                                        break;
+                                    case "TABLA":
+                                        tok.setNumToken(20);
+                                        break;
+                                    case "ENTERO":
+                                        tok.setNumToken(21);
+                                        break;
+                                    case "CADENA":
+                                        tok.setNumToken(22);
+                                        break;
+                                    case "FECHA":
+                                        tok.setNumToken(23);
+                                        break;
+                                    case "FLOTANTE":
+                                        tok.setNumToken(24);
+                                        break;
+                                    case "INSERTAR":
+                                        tok.setNumToken(25);
+                                        break;
+                                    case "EN":
+                                        tok.setNumToken(26);
+                                        break;
+                                    case "VALORES":
+                                        tok.setNumToken(27);
+                                        break;
+                                    case "SELECCIONAR":
+                                        tok.setNumToken(28);
+                                        break;
+                                    case "COMO":
+                                        tok.setNumToken(29);
+                                        break;
+                                    case "DE":
+                                        tok.setNumToken(30);
+                                        break;
+                                    case "DONDE":
+                                        tok.setNumToken(31);
+                                        break;
+                                    case "Y":
+                                        tok.setNumToken(32);
+                                        break;
+                                    case "O":
+                                        tok.setNumToken(33);
+                                        break;
+                                    case "ELIMINAR":
+                                        tok.setNumToken(34);
+                                        break;
+                                    case "ACTUALIZAR":
+                                        tok.setNumToken(35);
+                                        break;
+                                    case "ESTABLECER":
+                                        tok.setNumToken(36);
+                                        break;
+                                        
+                                    default:
+                                        break;
+                                }
+                                
+                            }
+                            else {
+                                tok.setNumToken(18);
+                                tok.setTipo("Identificador");
+                            }
+                            
                             tok.setLexema(lexema);
                             tok.setLinea(contadorLinea);
                             tok.setColumna(contadorCol);
