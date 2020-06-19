@@ -12,9 +12,8 @@ namespace _OLC1_Proyecto1_201602869.Analizadores
     {
 
         // listas para tablas
-        public ArrayList listaTablas = new ArrayList();
-
-
+        public static ArrayList listaTablas = new ArrayList();
+        
 
         //clase de analizador sintactico
         Objeto.Token preanalisis;
@@ -38,7 +37,7 @@ namespace _OLC1_Proyecto1_201602869.Analizadores
         public void inicio() {
             comandos();
             MessageBox.Show("Analisis Sintactico Completo");
-            MessageBox.Show("Tablas Creadas: " + cantidadTablas);
+            
         }
         
 
@@ -52,7 +51,19 @@ namespace _OLC1_Proyecto1_201602869.Analizadores
             {
                 emparejar(19);// crear
                 emparejar(20);//tabla
+                //MessageBox.Show("nombre de la tabla a crear: " + preanalisis.getLexema());
+                // tiene que ser objeto tabla
+                Objeto.Tabla tablaNueva = new Objeto.Tabla();
+                tablaNueva.setNombre(preanalisis.getLexema());
+                ArrayList lista = new ArrayList();
+                tablaNueva.setColumnas(lista);
+                listaTablas.Add(tablaNueva);
                 emparejar(18); // identificador
+                
+                // este identificador es el nombre de la tabla
+
+                //Objeto.Tabla nuevaT = new Objeto.Tabla();
+                
                 emparejar(1);// parentesis abre
                 columnaC();
                 masColumnaC();
@@ -87,7 +98,19 @@ namespace _OLC1_Proyecto1_201602869.Analizadores
         }
 
         public void columnaC() {
-            emparejar(18);//id
+            Objeto.Columna col = new Objeto.Columna();
+            col.setNombreCol(preanalisis.getLexema());
+            Objeto.Tabla tablaTemp = (Objeto.Tabla)listaTablas[listaTablas.Count - 1];
+            ArrayList valoresC = new ArrayList();
+            col.setValores(valoresC);
+            //tablaTemp.setColumnas(col);
+            ArrayList colTemp = tablaTemp.getColumnas();
+
+            colTemp.Add(col);
+            tablaTemp.setColumnas(colTemp); // actualizar columnas 
+
+            //listaTablas[listaTablas.Count - 1] = tablaTemp; // actualizar tabla 
+            emparejar(18);//id nombre columna
             tipoC();
         }
         public void masColumnaC() {
@@ -103,34 +126,46 @@ namespace _OLC1_Proyecto1_201602869.Analizadores
             
         }
         public void tipoC() {
+            
+            
             if (preanalisis.getNumToken() == 21) { // entero
+                Objeto.Tabla tablaTemp = (Objeto.Tabla)listaTablas[listaTablas.Count - 1];
+                ArrayList listaColumnas = tablaTemp.getColumnas();
+                Objeto.Columna columna = (Objeto.Columna)listaColumnas[listaColumnas.Count - 1];
+                //MessageBox.Show("Se asignara entero a:" + columna.getNombreCol());
+                columna.setTipo("entero");
+                listaColumnas[listaColumnas.Count - 1] = columna;
                 emparejar(21);
             }
             else if (preanalisis.getNumToken() == 22) { // cadena
+                Objeto.Tabla tablaTemp = (Objeto.Tabla)listaTablas[listaTablas.Count - 1];
+                ArrayList listaColumnas = tablaTemp.getColumnas();
+                Objeto.Columna columna = (Objeto.Columna)listaColumnas[listaColumnas.Count - 1];
+                //MessageBox.Show("Se asignara cadena a:" + columna.getNombreCol());
+                columna.setTipo("cadena");
                 emparejar(22);
             }
             else if (preanalisis.getNumToken() == 23) // fecha
             { // cadena
+                Objeto.Tabla tablaTemp = (Objeto.Tabla)listaTablas[listaTablas.Count - 1];
+                ArrayList listaColumnas = tablaTemp.getColumnas();
+                Objeto.Columna columna = (Objeto.Columna)listaColumnas[listaColumnas.Count - 1];
+                //MessageBox.Show("Se asignara fecha a:" + columna.getNombreCol());
+                columna.setTipo("fecha");
                 emparejar(23);
             }
             else if (preanalisis.getNumToken() == 24) // flotante
             { // cadena
+                Objeto.Tabla tablaTemp = (Objeto.Tabla)listaTablas[listaTablas.Count - 1];
+                ArrayList listaColumnas = tablaTemp.getColumnas();
+                Objeto.Columna columna = (Objeto.Columna)listaColumnas[listaColumnas.Count - 1];
+                //MessageBox.Show("Se asignara flotante a:" + columna.getNombreCol());
+                columna.setTipo("flotante");
                 emparejar(24);
             }
-
         }
 
-        /*
-        public void otraInstruccion() {
-            comandos(); 
-        }
-        public void cuerpoCrear() {
-            if (preanalisis.getNumToken() == 20) {
-                emparejar(20);//tabla
-                emparejar(18); // identificador
-                emparejar(1);// parentesis abre 
-            }
-        }*/
+     
         public void emparejar(int numToken) {
             
             if (numToken == preanalisis.getNumToken())

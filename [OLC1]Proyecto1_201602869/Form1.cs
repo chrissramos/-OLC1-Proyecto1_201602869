@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -69,9 +70,85 @@ namespace _OLC1_Proyecto1_201602869
         private void ejecutarToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //analisis lexico
-            scan.recibeTexto(txtArchivo.Text);
+            String textoCompleto = txtArchivo.Text + " ";
+            scan.recibeTexto(textoCompleto);
             // analisis sintactico
             parser.parsear();
+
+
+            for (int i = 0; i < Analizadores.Parser.listaTablas.Count; i++)
+            {
+                Objeto.Tabla tablaRec = (Objeto.Tabla)Analizadores.Parser.listaTablas[i];
+                
+                listaTablas.Items.Add(tablaRec.getNombre());
+            }
+
+            // ver columnas
+
+            
+
+            // obtener elemento seleccionado
+            
+            //String columnaSeleccionada = listBoxColumnas.SelectedItem.ToString();
+            
+            
+
+        }
+        private void btnTabla_Click(object sender, EventArgs e)
+        {
+            listBoxColumnas.Items.Clear();
+            if (listaTablas.Items.Count > 0)
+            {
+                String tablaSel = listaTablas.SelectedItem.ToString();
+               // MessageBox.Show("tabla seleccionada: " + tablaSel);
+                for (int i = 0; i < Analizadores.Parser.listaTablas.Count; i++)
+                {
+                    Objeto.Tabla tablaRec = (Objeto.Tabla)Analizadores.Parser.listaTablas[i];
+                    if (tablaRec.getNombre().Equals(tablaSel)) {
+                        //MessageBox.Show("Encontramos tabla ");
+                        ArrayList listaColumnas = tablaRec.getColumnas();
+                        //MessageBox.Show("Tabla tiene columnas " + listaColumnas.Count);
+                        for (int j = 0; j < listaColumnas.Count; j++)
+                        {
+                            Objeto.Columna columna = (Objeto.Columna)listaColumnas[j];
+                            listBoxColumnas.Items.Add(columna.getNombreCol());
+
+                        }
+                    }
+                }
+            }
+        }
+        private void btnTipo_Click(object sender, EventArgs e)
+        {
+            if (listBoxColumnas.Items.Count>0)
+            {
+                String tablaSel = listaTablas.SelectedItem.ToString();
+                String columnaSel = listBoxColumnas.SelectedItem.ToString();
+                for (int i = 0; i < Analizadores.Parser.listaTablas.Count; i++)
+                {
+                    Objeto.Tabla tablaRec = (Objeto.Tabla)Analizadores.Parser.listaTablas[i];
+                    if (tablaRec.getNombre().Equals(tablaSel))
+                    {
+                        //MessageBox.Show("Encontramos tabla ");
+                        ArrayList listaColumnas = tablaRec.getColumnas();
+                        //MessageBox.Show("Tabla tiene columnas " + listaColumnas.Count);
+                        for (int j = 0; j < listaColumnas.Count; j++)
+                        {
+                            
+                            Objeto.Columna columna = (Objeto.Columna)listaColumnas[j];
+
+                            if (columna.getNombreCol().Equals(columnaSel)) {
+                                lblTipo.Text = columna.getTipo();
+                            }
+                            //MessageBox.Show("Nombre columna: " + columna.getNombreCol());
+                            
+
+                        }
+                    }
+                }
+
+
+            }
         }
 
         private void mostrarTokensToolStripMenuItem_Click(object sender, EventArgs e)
@@ -226,5 +303,7 @@ namespace _OLC1_Proyecto1_201602869
             ofile.WriteLine("</html>");
             ofile.Close();
         }
+
+        
     }
 }

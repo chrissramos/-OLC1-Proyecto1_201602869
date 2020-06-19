@@ -48,6 +48,13 @@
             this.acercaDeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.txtArchivo = new System.Windows.Forms.RichTextBox();
+            this.listaTablas = new System.Windows.Forms.ListBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.listBoxColumnas = new System.Windows.Forms.ListBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.btnTabla = new System.Windows.Forms.Button();
+            this.lblTipo = new System.Windows.Forms.Label();
+            this.btnTipo = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -200,11 +207,85 @@
             this.txtArchivo.TabIndex = 1;
             this.txtArchivo.Text = "";
             // 
+            // listaTablas
+            // 
+            this.listaTablas.FormattingEnabled = true;
+            this.listaTablas.ItemHeight = 16;
+            this.listaTablas.Location = new System.Drawing.Point(528, 75);
+            this.listaTablas.Name = "listaTablas";
+            this.listaTablas.Size = new System.Drawing.Size(155, 180);
+            this.listaTablas.TabIndex = 2;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Comic Sans MS", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(528, 32);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(149, 33);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "Lista Tablas";
+            // 
+            // listBoxColumnas
+            // 
+            this.listBoxColumnas.FormattingEnabled = true;
+            this.listBoxColumnas.ItemHeight = 16;
+            this.listBoxColumnas.Location = new System.Drawing.Point(740, 75);
+            this.listBoxColumnas.Name = "listBoxColumnas";
+            this.listBoxColumnas.Size = new System.Drawing.Size(131, 180);
+            this.listBoxColumnas.TabIndex = 4;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Comic Sans MS", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(743, 32);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(116, 33);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "Columnas";
+            // 
+            // btnTabla
+            // 
+            this.btnTabla.Location = new System.Drawing.Point(672, 271);
+            this.btnTabla.Name = "btnTabla";
+            this.btnTabla.Size = new System.Drawing.Size(106, 23);
+            this.btnTabla.TabIndex = 6;
+            this.btnTabla.Text = "Ver Columnas";
+            this.btnTabla.UseVisualStyleBackColor = true;
+            this.btnTabla.Click += new System.EventHandler(this.btnTabla_Click);
+            // 
+            // lblTipo
+            // 
+            this.lblTipo.AutoSize = true;
+            this.lblTipo.Location = new System.Drawing.Point(908, 75);
+            this.lblTipo.Name = "lblTipo";
+            this.lblTipo.Size = new System.Drawing.Size(40, 17);
+            this.lblTipo.TabIndex = 7;
+            this.lblTipo.Text = "Tipo ";
+            // 
+            // btnTipo
+            // 
+            this.btnTipo.Location = new System.Drawing.Point(902, 114);
+            this.btnTipo.Name = "btnTipo";
+            this.btnTipo.Size = new System.Drawing.Size(75, 23);
+            this.btnTipo.TabIndex = 8;
+            this.btnTipo.Text = "Ver Tipo";
+            this.btnTipo.UseVisualStyleBackColor = true;
+            this.btnTipo.Click += new System.EventHandler(this.btnTipo_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1218, 754);
+            this.Controls.Add(this.btnTipo);
+            this.Controls.Add(this.lblTipo);
+            this.Controls.Add(this.btnTabla);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.listBoxColumnas);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.listaTablas);
             this.Controls.Add(this.txtArchivo);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
@@ -239,6 +320,13 @@
         private System.Windows.Forms.ToolStripMenuItem acercaDeToolStripMenuItem;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.RichTextBox txtArchivo;
+        private System.Windows.Forms.Label label1;
+        public System.Windows.Forms.ListBox listaTablas;
+        private System.Windows.Forms.ListBox listBoxColumnas;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button btnTabla;
+        private System.Windows.Forms.Label lblTipo;
+        private System.Windows.Forms.Button btnTipo;
     }
 }
 

@@ -12,6 +12,20 @@ namespace _OLC1_Proyecto1_201602869.Objeto
         String nombre;
         ArrayList columnas;
 
+        public Tabla() { }
+
+        public void setNombre(String nombre) {
+            this.nombre = nombre;
+        }
+        public void setColumnas(ArrayList columnas) {
+            this.columnas = columnas;
+        }
+        public String getNombre() {
+            return this.nombre;
+        }
+        public ArrayList getColumnas() {
+            return this.columnas;
+        }
 
     }
 }
