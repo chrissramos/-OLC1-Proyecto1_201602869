@@ -139,6 +139,7 @@ namespace _OLC1_Proyecto1_201602869
 
                             if (columna.getNombreCol().Equals(columnaSel)) {
                                 lblTipo.Text = columna.getTipo();
+                                
                             }
                             //MessageBox.Show("Nombre columna: " + columna.getNombreCol());
                             

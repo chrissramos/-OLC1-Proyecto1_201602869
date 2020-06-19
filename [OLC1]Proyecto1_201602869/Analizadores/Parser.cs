@@ -126,39 +126,32 @@ namespace _OLC1_Proyecto1_201602869.Analizadores
             
         }
         public void tipoC() {
-            
-            
+
+            Objeto.Tabla tablaTemp = (Objeto.Tabla)listaTablas[listaTablas.Count - 1];
+            ArrayList listaColumnas = tablaTemp.getColumnas();
+            Objeto.Columna columna = (Objeto.Columna)listaColumnas[listaColumnas.Count - 1];
+
+
             if (preanalisis.getNumToken() == 21) { // entero
-                Objeto.Tabla tablaTemp = (Objeto.Tabla)listaTablas[listaTablas.Count - 1];
-                ArrayList listaColumnas = tablaTemp.getColumnas();
-                Objeto.Columna columna = (Objeto.Columna)listaColumnas[listaColumnas.Count - 1];
                 //MessageBox.Show("Se asignara entero a:" + columna.getNombreCol());
                 columna.setTipo("entero");
                 listaColumnas[listaColumnas.Count - 1] = columna;
                 emparejar(21);
             }
             else if (preanalisis.getNumToken() == 22) { // cadena
-                Objeto.Tabla tablaTemp = (Objeto.Tabla)listaTablas[listaTablas.Count - 1];
-                ArrayList listaColumnas = tablaTemp.getColumnas();
-                Objeto.Columna columna = (Objeto.Columna)listaColumnas[listaColumnas.Count - 1];
                 //MessageBox.Show("Se asignara cadena a:" + columna.getNombreCol());
                 columna.setTipo("cadena");
                 emparejar(22);
             }
             else if (preanalisis.getNumToken() == 23) // fecha
             { // cadena
-                Objeto.Tabla tablaTemp = (Objeto.Tabla)listaTablas[listaTablas.Count - 1];
-                ArrayList listaColumnas = tablaTemp.getColumnas();
-                Objeto.Columna columna = (Objeto.Columna)listaColumnas[listaColumnas.Count - 1];
                 //MessageBox.Show("Se asignara fecha a:" + columna.getNombreCol());
                 columna.setTipo("fecha");
                 emparejar(23);
             }
             else if (preanalisis.getNumToken() == 24) // flotante
             { // cadena
-                Objeto.Tabla tablaTemp = (Objeto.Tabla)listaTablas[listaTablas.Count - 1];
-                ArrayList listaColumnas = tablaTemp.getColumnas();
-                Objeto.Columna columna = (Objeto.Columna)listaColumnas[listaColumnas.Count - 1];
+               
                 //MessageBox.Show("Se asignara flotante a:" + columna.getNombreCol());
                 columna.setTipo("flotante");
                 emparejar(24);
