@@ -13,7 +13,9 @@ namespace _OLC1_Proyecto1_201602869.Analizadores
 
         // listas para tablas
         public static ArrayList listaTablas = new ArrayList();
-        
+
+        String tablaInsertar = ""; // nombre de tabla actual a insertar
+        int contadorColumna = 0;
 
         //clase de analizador sintactico
         Objeto.Token preanalisis;
@@ -79,6 +81,8 @@ namespace _OLC1_Proyecto1_201602869.Analizadores
                 //INSERTAR EN Estudiantes VALORES(0,”Pepito Gímenez”,’02/02/2012’);
                 emparejar(25); // insertar
                 emparejar(26);// en 
+                tablaInsertar = preanalisis.getLexema();
+                //MessageBox.Show("Tabla a meter datos: " + tablaInsertar);
                 emparejar(18);// id
                 emparejar(27);//valores
                 emparejar(1);//par (
@@ -86,6 +90,8 @@ namespace _OLC1_Proyecto1_201602869.Analizadores
                 insertarDos();
                 emparejar(2);//par)
                 emparejar(5);//punto y coma
+                contadorColumna = 0;
+                tablaInsertar = "";
                 comandos();
             }
             else if (preanalisis.getNumToken() == 28)//seleccionar 
@@ -106,20 +112,54 @@ namespace _OLC1_Proyecto1_201602869.Analizadores
             }
         }
         public void insertarUno() {
+            //aqui buscar tabla y columnas
+            int indiceTabla = 0;
+
+            for (int i = 0; i < listaTablas.Count; i++)
+            {
+                Objeto.Tabla tablaBuscar= (Objeto.Tabla)listaTablas[i];
+                if (tablaBuscar.getNombre().Equals(tablaInsertar)) {
+                    indiceTabla = i;
+                }
+            }
+            Objeto.Tabla tablaU = (Objeto.Tabla)listaTablas[indiceTabla];
+            
+            ArrayList listaColumnas = tablaU.getColumnas();
+            Objeto.Columna columna = (Objeto.Columna)listaColumnas[contadorColumna];
+            ArrayList listaValoresColumna = columna.getValores();
+            
+            
+
             if (preanalisis.getNumToken() == 12) { // entero
+                //MessageBox.Show("Se metera en columna, dato " + columna.getNombreCol() + preanalisis.getLexema());
+                listaValoresColumna.Add(preanalisis.getLexema());
+                columna.setValores(listaValoresColumna);
+                contadorColumna++;
                 emparejar(12);// entero
                 
             }
             else if (preanalisis.getNumToken() == 17)
             { // cadena
+                //MessageBox.Show("Se metera en columna, dato " + columna.getNombreCol() + preanalisis.getLexema());
+                listaValoresColumna.Add(preanalisis.getLexema());
+                columna.setValores(listaValoresColumna);
+                contadorColumna++;
                 emparejar(17);// cadena
             }
             else if (preanalisis.getNumToken() == 15)
             { // fecha
+                //MessageBox.Show("Se metera en columna, dato " + columna.getNombreCol() + preanalisis.getLexema());
+                listaValoresColumna.Add(preanalisis.getLexema());
+                columna.setValores(listaValoresColumna);
+                contadorColumna++;
                 emparejar(15);// fecha
             }
             else if (preanalisis.getNumToken() == 14)
             { // flotante
+               // MessageBox.Show("Se metera en columna, dato " + columna.getNombreCol() + preanalisis.getLexema());
+                listaValoresColumna.Add(preanalisis.getLexema());
+                columna.setValores(listaValoresColumna);
+                contadorColumna++;
                 emparejar(14);// flotante
             }
         }
