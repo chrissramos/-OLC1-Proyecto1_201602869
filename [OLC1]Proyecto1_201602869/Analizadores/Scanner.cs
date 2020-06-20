@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace _OLC1_Proyecto1_201602869.Analizadores
 {
@@ -468,6 +469,7 @@ namespace _OLC1_Proyecto1_201602869.Analizadores
                         }
                         break;
                     case 8:
+
                         if ((codigoAscii >= 48 && codigoAscii <= 57)) {
                             estado = 12;
                             lexema = lexema + letra;
@@ -624,6 +626,7 @@ namespace _OLC1_Proyecto1_201602869.Analizadores
                     case 26:
                         //acepto fecha 
                         {
+                            //MessageBox.Show("Fecha a aceptar: " + lexema);
                             Objeto.Token tok = new Objeto.Token();
                             tok.setNumToken(15);
                             tok.setTipo("Fecha ");

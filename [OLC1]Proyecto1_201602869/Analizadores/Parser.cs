@@ -76,7 +76,16 @@ namespace _OLC1_Proyecto1_201602869.Analizadores
             }
             else if (preanalisis.getNumToken() == 25)
             { // insertar
-                emparejar(25);
+                //INSERTAR EN Estudiantes VALORES(0,”Pepito Gímenez”,’02/02/2012’);
+                emparejar(25); // insertar
+                emparejar(26);// en 
+                emparejar(18);// id
+                emparejar(27);//valores
+                emparejar(1);//par (
+                insertarUno();
+                insertarDos();
+                emparejar(2);//par)
+                emparejar(5);//punto y coma
                 comandos();
             }
             else if (preanalisis.getNumToken() == 28)//seleccionar 
@@ -96,7 +105,34 @@ namespace _OLC1_Proyecto1_201602869.Analizadores
 
             }
         }
-
+        public void insertarUno() {
+            if (preanalisis.getNumToken() == 12) { // entero
+                emparejar(12);// entero
+                
+            }
+            else if (preanalisis.getNumToken() == 17)
+            { // cadena
+                emparejar(17);// cadena
+            }
+            else if (preanalisis.getNumToken() == 15)
+            { // fecha
+                emparejar(15);// fecha
+            }
+            else if (preanalisis.getNumToken() == 14)
+            { // flotante
+                emparejar(14);// flotante
+            }
+        }
+        public void insertarDos() {
+            if (preanalisis.getNumToken() == 6)
+            {
+                //MessageBox.Show("otro valor");
+                emparejar(6);//coma
+                insertarUno();
+                insertarDos();
+            }
+            else { }
+        }
         public void columnaC() {
             Objeto.Columna col = new Objeto.Columna();
             col.setNombreCol(preanalisis.getLexema());
