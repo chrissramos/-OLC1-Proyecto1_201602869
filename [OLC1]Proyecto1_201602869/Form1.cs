@@ -77,14 +77,16 @@ namespace _OLC1_Proyecto1_201602869
             scan.recibeTexto(textoCompleto);
             // analisis sintactico
             parser.parsear();
-
-
+            if (Analizadores.Parser.listaTablas.Count>0) {
+                MessageBox.Show("Cantidad tablas : " + Analizadores.Parser.listaTablas.Count);
+            }
+            /*
             for (int i = 0; i < Analizadores.Parser.listaTablas.Count; i++)
             {
                 Objeto.Tabla tablaRec = (Objeto.Tabla)Analizadores.Parser.listaTablas[i];
                 
                 listaTablas.Items.Add(tablaRec.getNombre());
-            }
+            }*/
 
             // ver columnas
 
@@ -383,30 +385,7 @@ namespace _OLC1_Proyecto1_201602869
                        // Console.WriteLine("Valor de K " + k);
                         Objeto.Columna columnaA = (Objeto.Columna)listaColumnas[k];
                         ArrayList listaDatoCol = columnaA.getValores();
-                        
-
-
-                        if (listaDatoCol.Count>0) {
-
-                            //MessageBox.Show("Estoy en columnaaa " + columnaA.getNombreCol());
-                            
-                        }
-                        /*if (listaDatoCol.Count>0) {
-                            //aqui si
-                            if (contadorAux < listaDatoCol.Count) {
-                                for (int z = 0; z < listaColumnas.Count; z++)
-                                {
-                                    MessageBox.Show("Contador que viene: " + contadorAux);
-                                    String contenido = listaDatoCol[contadorAux].ToString();
-                                    Console.WriteLine("Dato sacado: " + contenido);
-                                    //
-                                }
-                                
-                                Console.WriteLine("Hay columnas " + listaColumnas.Count + "  y datoCol tiene: " + listaDatoCol.Count);
-
-                            }
-
-                        }*/
+                     
                         
                         for (int l = 0; l < listaDatoCol.Count; l++)
                         {
@@ -439,7 +418,7 @@ namespace _OLC1_Proyecto1_201602869
                     int contadorTok = 0;
                     //MessageBox.Show("Tabla: " + tablaActual.getNombre() + " Cantidad Registros: " + listaHtml.Count + " Cantidad Datos en 1 columna: " + listaColumnas.Count );
                     //MessageBox.Show("Datos por Linea : " + listaHtml.Count + " / " + contadorColumnasss + " = " + operacion);
-                    MessageBox.Show("Se creara matriz de " + listaColumnas.Count + "x" + operacion);
+                   // MessageBox.Show("Se creara matriz de " + listaColumnas.Count + "x" + operacion);
                     String[,] matrix = new String[listaColumnas.Count,operacion];
                     for (int p = 0; p < listaColumnas.Count; p++)
                     {
@@ -472,22 +451,7 @@ namespace _OLC1_Proyecto1_201602869
                 
                 // fin th columnas
                 ofile.WriteLine("</tr>");
-                
-                // datos
-               /* for (int j = 0; j < scan.listaErrores.Count; j++)
-                {
-                    Objeto.ErrorLS t = (Objeto.ErrorLS)scan.listaErrores[j];
-
-                    ofile.WriteLine("<tr>");
-
-                    ofile.WriteLine("<td>" + t.getTipo() + "</td>");
-                    ofile.WriteLine("<td>" + t.getLexema() + "</td>");
-                    ofile.WriteLine("<td>" + t.getLinea() + "</td>");
-                    ofile.WriteLine("<td>" + t.getColumna() + "</td>");
-
-                    ofile.WriteLine(" </tr>");
-                }*/
-
+            
 
                 // fin datos
 

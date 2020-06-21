@@ -15,6 +15,7 @@ namespace _OLC1_Proyecto1_201602869.Analizadores
         public static ArrayList listaTablas = new ArrayList();
 
         String tablaInsertar = ""; // nombre de tabla actual a insertar
+        String tablaEliminar = ""; // tabla para comando Eliminar
         int contadorColumna = 0;
 
         //clase de analizador sintactico
@@ -103,9 +104,11 @@ namespace _OLC1_Proyecto1_201602869.Analizadores
             {
                 emparejar(34);// eliminar
                 emparejar(30);//de
+                tablaEliminar = preanalisis.getLexema();
                 emparejar(18); // identificador
                 cuerpoEl();
                 emparejar(5);// ;
+                tablaEliminar = "";
                 comandos();
             }
             else if (preanalisis.getNumToken() == 35)// actualizar
@@ -127,6 +130,30 @@ namespace _OLC1_Proyecto1_201602869.Analizadores
             }
             else {
                 // aqui elimino todos los datos de la tabla
+                int indiceTabla = 0;
+
+                for (int i = 0; i < listaTablas.Count; i++)
+                {
+                    Objeto.Tabla tablaBuscar = (Objeto.Tabla)listaTablas[i];
+                    if (tablaBuscar.getNombre().Equals(tablaEliminar))
+                    {
+                        indiceTabla = i;
+                        MessageBox.Show("Vamos a eliminar todos los datos de: " + tablaBuscar.getNombre());
+                        ArrayList listaColumnas = tablaBuscar.getColumnas();
+                        
+                        //ArrayList listaValoresColumna = columna.getValores();
+                        for (int j = 0; j < listaColumnas.Count; j++)
+                        {
+                            Objeto.Columna columna = (Objeto.Columna)listaColumnas[j];
+                            MessageBox.Show("Estamos en columna: " + columna.getNombreCol());
+                            // 
+                            ArrayList valoresVacios = new ArrayList();
+                            columna.setValores(valoresVacios);
+                        }
+                    }
+                }
+
+
             }
         }
         public void condicionElim() {
