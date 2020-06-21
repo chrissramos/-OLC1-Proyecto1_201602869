@@ -71,12 +71,13 @@ namespace _OLC1_Proyecto1_201602869.Analizadores
                 masColumnaC();
                 emparejar(2);// parentesis cierra
                 emparejar(5);//punto y coma
-                comandos();
+
+                comandos(); //INS
                 cantidadTablas++;
 
 
             }
-            else if (preanalisis.getNumToken() == 25)
+            else if (preanalisis.getNumToken() == 25) // insertar
             { // insertar
                 //INSERTAR EN Estudiantes VALORES(0,”Pepito Gímenez”,’02/02/2012’);
                 emparejar(25); // insertar
@@ -100,7 +101,12 @@ namespace _OLC1_Proyecto1_201602869.Analizadores
             }
             else if (preanalisis.getNumToken() == 34)//eliminar 
             {
-
+                emparejar(34);// eliminar
+                emparejar(30);//de
+                emparejar(18); // identificador
+                cuerpoEl();
+                emparejar(5);// ;
+                comandos();
             }
             else if (preanalisis.getNumToken() == 35)// actualizar
             {
@@ -110,6 +116,77 @@ namespace _OLC1_Proyecto1_201602869.Analizadores
             {
 
             }
+        }
+
+        public void cuerpoEl() {
+            if (preanalisis.getNumToken() == 31)
+            { // DONDE
+                emparejar(31); // 'donde'
+                condicionElim();
+
+            }
+            else {
+                // aqui elimino todos los datos de la tabla
+            }
+        }
+        public void condicionElim() {
+            if (preanalisis.getNumToken() == 18) { // id
+                emparejar(18);//id
+                condicionales();
+                valorCondicion();
+                condicionElim();
+            }
+            else if (preanalisis.getNumToken()==32) // Y
+            {
+                emparejar(32);//Y 
+                condicionElim();
+            }
+            else if (preanalisis.getNumToken() == 33) // O
+            {
+                emparejar(33);//O 
+                condicionElim();
+            }
+        }
+        public void condicionales() {
+            if (preanalisis.getNumToken() == 10) //>
+            {
+                emparejar(10);
+            }
+            else if (preanalisis.getNumToken() == 11) //<
+            {
+                emparejar(10);
+            }
+            else if (preanalisis.getNumToken() == 8) //>=
+            {
+                emparejar(8);
+            }
+            else if (preanalisis.getNumToken() == 9) //<=
+            {
+                emparejar(9);// <=
+            }
+            else if (preanalisis.getNumToken() == 3) { // =
+                emparejar(3); // =
+            }
+            else { }
+        }
+        public void valorCondicion() {
+            if (preanalisis.getNumToken() == 12) //Digito entero
+            {
+                emparejar(12);
+            }
+            else if (preanalisis.getNumToken() == 14) // flotante
+            {
+                emparejar(14);
+            }
+            else if (preanalisis.getNumToken() == 15) //fecha
+            {
+                emparejar(15);
+            }
+            else if (preanalisis.getNumToken() == 17) //cadena
+            {
+                emparejar(17);// cadena
+            }
+            else { }
         }
         public void insertarUno() {
             //aqui buscar tabla y columnas
@@ -233,7 +310,12 @@ namespace _OLC1_Proyecto1_201602869.Analizadores
                 emparejar(24);
             }
         }
+        public void recuperar() {
+            while (preanalisis.getNumToken()!= 5)
+            {
 
+            }
+        }
      
         public void emparejar(int numToken) {
             
@@ -244,6 +326,7 @@ namespace _OLC1_Proyecto1_201602869.Analizadores
             else {
                 //error sintactico
                 //MessageBox.Show("Se esperaba: " + tokenTipo + " y viene:" + preanalisis.getTipo() + " en:" + numPreanalisis);
+
                 // crear error y guardarlo en lista errores
                 MessageBox.Show("Error sintactico, Se esperaba : " + numToken + " vino:" + preanalisis.getNumToken());
             }
