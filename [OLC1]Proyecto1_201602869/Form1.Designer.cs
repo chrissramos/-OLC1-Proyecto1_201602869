@@ -207,6 +207,7 @@
             this.txtArchivo.Size = new System.Drawing.Size(482, 668);
             this.txtArchivo.TabIndex = 1;
             this.txtArchivo.Text = "";
+            this.txtArchivo.TextChanged += new System.EventHandler(this.txtArchivo_TextChanged);
             // 
             // listaTablas
             // 

@@ -365,7 +365,7 @@ namespace _OLC1_Proyecto1_201602869.Analizadores
                             //acepto numeros normales aqui
                             Objeto.Token tok = new Objeto.Token();
                             tok.setNumToken(12);
-                            tok.setTipo("Digito sin decimal ");
+                            tok.setTipo("Digito sin decimal");
                             tok.setLexema(lexema);
                             tok.setLinea(contadorLinea);
                             tok.setColumna(contadorCol);
