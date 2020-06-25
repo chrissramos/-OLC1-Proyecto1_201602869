@@ -80,9 +80,11 @@ namespace _OLC1_Proyecto1_201602869
             Analizadores.Scanner.listaTokens.Clear();
             String textoCompleto = textoSeleccionado + " ";
             scan.recibeTexto(textoCompleto);
+            
             //////// analisis sintactico
             parser.parsear();
 
+            llenarData();
             if (Analizadores.Parser.listaTablas.Count>0) {
                 MessageBox.Show("Cantidad tablas : " + Analizadores.Parser.listaTablas.Count);
             }
@@ -291,9 +293,9 @@ namespace _OLC1_Proyecto1_201602869
             ofile.WriteLine("</tr>");
 
             // datos
-            for (int i = 0; i < scan.listaErrores.Count; i++)
+            for (int i = 0; i < Analizadores.Scanner.listaErrores.Count; i++)
             {
-                Objeto.ErrorLS t = (Objeto.ErrorLS)scan.listaErrores[i];
+                Objeto.ErrorLS t = (Objeto.ErrorLS)Analizadores.Scanner.listaErrores[i];
 
                 ofile.WriteLine("<tr>");
                 
@@ -311,7 +313,7 @@ namespace _OLC1_Proyecto1_201602869
             ofile.WriteLine("</table>");
             ofile.WriteLine("</center>");
 
-            ofile.WriteLine("<h2 >" + "Cantidad de Errores: " + scan.listaErrores.Count + " </h2>");
+            ofile.WriteLine("<h2 >" + "Cantidad de Errores: " + Analizadores.Scanner.listaErrores.Count + " </h2>");
             ofile.WriteLine("</body>");
             ofile.WriteLine("</html>");
             ofile.Close();
@@ -481,6 +483,95 @@ namespace _OLC1_Proyecto1_201602869
 
             String pathErrores = Path.Combine(Application.StartupPath, "Tablas.html");
             Process.Start(pathErrores);
+        }
+
+        public  void llenarData() {
+            ArrayList listaHTML = new ArrayList();
+            dataGridView1.Columns.Clear();
+            dataGridView1.Rows.Clear();
+            int cantidadFilas = 0;
+            if (Analizadores.Parser.comandoSeleccionar.Equals(true))
+            {
+                if (Analizadores.Parser.todaTabla.Equals(true))
+                {
+                    //MessageBox.Show("Vamos a seleccionar toda la tabla: " + Analizadores.Parser.tablaSeleccionar );
+                    String nombreTablaS = Analizadores.Parser.tablaSeleccionar;
+                    for (int i = 0; i < Analizadores.Parser.listaTablas.Count; i++) {
+                        Objeto.Tabla tablaActual = (Objeto.Tabla)Analizadores.Parser.listaTablas[i];
+
+                        if (tablaActual.getNombre().Equals(nombreTablaS))
+                        {
+                            MessageBox.Show("Vamos a seleccionar toda la tabla: " + Analizadores.Parser.tablaSeleccionar);
+                            ArrayList listaColumnas = tablaActual.getColumnas();
+                           // dataGridView1.ColumnCount = listaColumnas.Count;
+                            dataGridView1.ColumnHeadersVisible = true;
+                            AdjustDataGridViewSizing();
+                            //DataGridViewCellStyle columnHeaderStyle = new DataGridViewCellStyle();
+
+                            //columnHeaderStyle.BackColor = Color.Aqua;
+                            //columnHeaderStyle.Font = new Font("Verdana", 10, FontStyle.Bold);
+                            //dataGridView1.ColumnHeadersDefaultCellStyle = columnHeaderStyle;
+
+
+                            //MessageBox.Show("Tabla tiene columnas " + listaColumnas.Count);
+
+                            for (int j = 0; j < listaColumnas.Count; j++)
+                            {
+                                Objeto.Columna columna = (Objeto.Columna)listaColumnas[j];
+                                cantidadFilas = columna.getValores().Count;
+                                dataGridView1.Columns.Add(columna.getNombreCol(), columna.getNombreCol());
+                                // j = numero de columna 
+                                ArrayList listaFilas = columna.getValores(); /// count lista filas es numero de fila
+                                //////////
+                                ///
+                                if (listaFilas.Count>0)
+                                {
+                                    for (int p = 0; p < listaFilas.Count; p++)
+                                    {
+                                       // dataGridView1[j, p].Value = listaFilas[p].ToString();
+                                    }
+                                }
+                                
+
+                            }
+
+                            dataGridView1.Rows.Add(cantidadFilas);
+
+                            // aqui agrego filas
+                            for (int q = 0; q < listaColumnas.Count; q++)
+                            {
+                                Objeto.Columna columna = (Objeto.Columna)listaColumnas[q];
+                                cantidadFilas = columna.getValores().Count;
+                                //dataGridView1.Columns.Add(columna.getNombreCol(), columna.getNombreCol());
+                                // j = numero de columna 
+                                ArrayList listaFilas = columna.getValores(); /// count lista filas es numero de fila
+                                //////////
+                                ///
+                                if (listaFilas.Count > 0)
+                                {
+                                    for (int w = 0; w < listaFilas.Count; w++)
+                                    {
+                                         dataGridView1[q, w].Value = listaFilas[w].ToString();
+                                    }
+                                }
+
+
+                            }
+
+                        }
+
+                    }
+
+                    //MessageBox.Show("Columnassss: " + dataGridView1.ColumnCount);
+                    
+                }
+            }
+        }
+        private void AdjustDataGridViewSizing()
+        {
+            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            //dataGridView1.Columns[ratingColumn].Width = 50;
+
         }
 
         private void txtArchivo_TextChanged(object sender, EventArgs e)

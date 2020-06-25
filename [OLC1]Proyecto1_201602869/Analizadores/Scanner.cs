@@ -14,7 +14,7 @@ namespace _OLC1_Proyecto1_201602869.Analizadores
         public int estado = 0;
         public int indice = 0;
         public static ArrayList listaTokens = new ArrayList();
-        public ArrayList listaErrores = new ArrayList();
+        public static ArrayList listaErrores = new ArrayList();
         public ArrayList listaReservadas = new ArrayList();
         public int contadorLinea = 0;
         public int contadorCol = 0;

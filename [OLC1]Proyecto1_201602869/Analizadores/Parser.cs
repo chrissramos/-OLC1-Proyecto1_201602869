@@ -10,6 +10,11 @@ namespace _OLC1_Proyecto1_201602869.Analizadores
 {
     class Parser
     {
+
+        // bandera recuperar
+        bool banderaRecu = true;
+
+
         //VARIABLES PARA ELIMINAR
         String nombreDatoEliminar = "";
         String condicionalEliminar = "";
@@ -42,6 +47,12 @@ namespace _OLC1_Proyecto1_201602869.Analizadores
 
         int contadorColumna = 0;
 
+        // para seleccionar
+        public static String tablaSeleccionar = "";
+        public static ArrayList tablaSel = new ArrayList();
+        public static bool todaTabla = false;
+        public static bool comandoSeleccionar = false;
+
         //clase de analizador sintactico
         Objeto.Token preanalisis;
         int numPreanalisis;
@@ -62,6 +73,7 @@ namespace _OLC1_Proyecto1_201602869.Analizadores
         }
 
         public void inicio() {
+            
             comandos();
             MessageBox.Show("Analisis Sintactico Completo");
             
@@ -207,13 +219,35 @@ namespace _OLC1_Proyecto1_201602869.Analizadores
 
             listaO.Clear();
         }
+
+        public void seleccionTabla() {
+            if (todaTabla.Equals(true))
+            {
+                for (int i = 0; i < listaTablas.Count; i++)
+                {
+                    Objeto.Tabla tablaActual = (Objeto.Tabla)Analizadores.Parser.listaTablas[i];
+                    if (tablaActual.getNombre().Equals(tablaSeleccionar))
+                    {
+                        ArrayList listaColumnas = tablaActual.getColumnas();
+                        
+                        for (int j = 0; j < listaColumnas.Count; j++)
+                        {
+                            Objeto.Columna columna = (Objeto.Columna)listaColumnas[j];
+                            
+
+                        }
+                    }
+                }
+            }
+        }
+
         public void comandos()
         {
-
+            banderaRecu = true;
             int numero = preanalisis.getNumToken();
             //MessageBox.Show("El numero es: " + numero);
             // aqui va con ifs
-            if (preanalisis.getNumToken() == 19)
+            if (preanalisis.getNumToken() == 19) // crear
             {
                 emparejar(19);// crear
                 emparejar(20);//tabla
@@ -261,7 +295,15 @@ namespace _OLC1_Proyecto1_201602869.Analizadores
             }
             else if (preanalisis.getNumToken() == 28)//seleccionar 
             {
-
+                emparejar(28);// seleccionar
+                cuerpoSel();
+                emparejar(30); // de
+                tablaSeleccionar = preanalisis.getLexema();
+                emparejar(18); // id nombre tabla
+                emparejar(5); // ;
+                comandoSeleccionar = true;
+                //tablaSeleccionar = "";
+                comandos();
             }
             else if (preanalisis.getNumToken() == 34)//eliminar 
             {
@@ -298,6 +340,21 @@ namespace _OLC1_Proyecto1_201602869.Analizadores
 
             }
         }
+
+        public void cuerpoSel() {
+            if (preanalisis.getNumToken()==4)//*
+            {
+                todaTabla = true;
+
+                emparejar(4);
+
+            }
+            else if (preanalisis.getNumToken()== 18)
+            {
+                
+            }
+        }
+
         public void actUno() {
             listaCamposAct.Add(preanalisis.getLexema());
             emparejar(18);//id nombre del campo que se buscara para actualizar
@@ -656,21 +713,29 @@ namespace _OLC1_Proyecto1_201602869.Analizadores
                                 {
                                     //ver el condicional = o !=
                                     if (condicionalEliminar.Equals("=")) {
-                                        if (datoEnCol.Equals(condicionEliminarCadena))
+                                        if (!datoEnCol.Equals(""))
                                         {
-                                         // /  //indiceRegistro = l;
-                                           // MessageBox.Show("Se encontro registro IGUAL  en posicion: " + l + " dato que se busca: " + condicionEliminarCadena + " = " + datoEnCol);
-                                            listaRegistros.Add(l);
-                                            listaO.Add(l);
+                                            if (datoEnCol.Equals(condicionEliminarCadena))
+                                            {
+                                                // /  //indiceRegistro = l;
+                                                // MessageBox.Show("Se encontro registro IGUAL  en posicion: " + l + " dato que se busca: " + condicionEliminarCadena + " = " + datoEnCol);
+                                                listaRegistros.Add(l);
+                                                listaO.Add(l);
+                                            }
                                         }
+                                        
                                     } else if (condicionalEliminar.Equals("!=")) {
-                                        if (!datoEnCol.Equals(condicionEliminarCadena))
+                                        if (!datoEnCol.Equals(""))
                                         {
-                                            //indiceRegistro = l;
-                                            //MessageBox.Show("Se encontro registro No igual cadena o fecha a eliminar en posicion: " + l);
-                                            listaRegistros.Add(l);
-                                            listaO.Add(l);
+                                            if (!datoEnCol.Equals(condicionEliminarCadena))
+                                            {
+                                                //indiceRegistro = l;
+                                                //MessageBox.Show("Se encontro registro No igual cadena o fecha a eliminar en posicion: " + l);
+                                                listaRegistros.Add(l);
+                                                listaO.Add(l);
+                                            }
                                         }
+                                        
                                     }
                                     
                                 }
@@ -678,65 +743,89 @@ namespace _OLC1_Proyecto1_201602869.Analizadores
                                     // ver > , < , >= , <=, = , != 
                                     if (condicionalEliminar.Equals(">"))
                                     {
-                                        float datoCol = float.Parse(datoEnCol);
-                                        if (datoCol > condicionEliminarNumeroDecimal)
+                                        if (!datoEnCol.Equals(""))
                                         {
-                                            //MessageBox.Show("Se encontro registro flotante a eliminar en posicion: " + l);
-                                            listaRegistros.Add(l);
-                                            listaO.Add(l);
+                                            float datoCol = float.Parse(datoEnCol);
+                                            if (datoCol > condicionEliminarNumeroDecimal)
+                                            {
+                                                //MessageBox.Show("Se encontro registro flotante a eliminar en posicion: " + l);
+                                                listaRegistros.Add(l);
+                                                listaO.Add(l);
+                                            }
                                         }
+                                        
                                     }
                                     else if (condicionalEliminar.Equals("<"))
                                     {
-                                        float datoCol = float.Parse(datoEnCol);
-                                        if (datoCol < condicionEliminarNumeroDecimal)
+                                        if (!datoEnCol.Equals(""))
                                         {
-                                            //MessageBox.Show("Se encontro registro flotante a eliminar en posicion: " + l);
-                                            listaRegistros.Add(l);
-                                            listaO.Add(l);
+                                            float datoCol = float.Parse(datoEnCol);
+                                            if (datoCol < condicionEliminarNumeroDecimal)
+                                            {
+                                                //MessageBox.Show("Se encontro registro flotante a eliminar en posicion: " + l);
+                                                listaRegistros.Add(l);
+                                                listaO.Add(l);
+                                            }
                                         }
+                                        
                                     }
                                     else if (condicionalEliminar.Equals(">="))
                                     {
-                                        float datoCol = float.Parse(datoEnCol);
-                                        if (datoCol >= condicionEliminarNumeroDecimal)
+                                        if (!datoEnCol.Equals(""))
                                         {
-                                           // MessageBox.Show("Se encontro registro flotante a eliminar en posicion: " + l);
-                                            listaRegistros.Add(l);
-                                            listaO.Add(l);
+                                            float datoCol = float.Parse(datoEnCol);
+                                            if (datoCol >= condicionEliminarNumeroDecimal)
+                                            {
+                                                // MessageBox.Show("Se encontro registro flotante a eliminar en posicion: " + l);
+                                                listaRegistros.Add(l);
+                                                listaO.Add(l);
+                                            }
                                         }
+                                        
                                     }
                                     else if (condicionalEliminar.Equals("<="))
                                     {
-                                        float datoCol = float.Parse(datoEnCol);
-                                        if (datoCol <= condicionEliminarNumeroDecimal)
+                                        if (!datoEnCol.Equals(""))
                                         {
-                                           // MessageBox.Show("Se encontro registro flotante a eliminar en posicion: " + l);
-                                            listaRegistros.Add(l);
-                                            listaO.Add(l);
+                                            float datoCol = float.Parse(datoEnCol);
+                                            if (datoCol <= condicionEliminarNumeroDecimal)
+                                            {
+                                                // MessageBox.Show("Se encontro registro flotante a eliminar en posicion: " + l);
+                                                listaRegistros.Add(l);
+                                                listaO.Add(l);
+                                            }
                                         }
+                                        
                                     }
                                     else if (condicionalEliminar.Equals("="))
                                     {
-                                        float datoCol = float.Parse(datoEnCol);
-                                        if (datoCol == condicionEliminarNumeroDecimal)
+                                        if (!datoEnCol.Equals(""))
                                         {
-                                            //indiceRegistro = l;
-                                           // MessageBox.Show("Se encontro registro flotante a eliminar en posicion: " + l);
-                                            listaRegistros.Add(l);
-                                            listaO.Add(l);
+                                            float datoCol = float.Parse(datoEnCol);
+                                            if (datoCol == condicionEliminarNumeroDecimal)
+                                            {
+                                                //indiceRegistro = l;
+                                                // MessageBox.Show("Se encontro registro flotante a eliminar en posicion: " + l);
+                                                listaRegistros.Add(l);
+                                                listaO.Add(l);
+                                            }
                                         }
+                                        
                                     }
                                     else if (condicionalEliminar.Equals("!="))
                                     {
-                                        float datoCol = float.Parse(datoEnCol);
-                                        if (datoCol!= condicionEliminarNumeroDecimal)
+                                        if (!datoEnCol.Equals(""))
                                         {
-                                            //indiceRegistro = l;
-                                           // MessageBox.Show("Se encontro registro flotante a eliminar en posicion: " + l);
-                                            listaRegistros.Add(l);
-                                            listaO.Add(l);
+                                            float datoCol = float.Parse(datoEnCol);
+                                            if (datoCol != condicionEliminarNumeroDecimal)
+                                            {
+                                                //indiceRegistro = l;
+                                                // MessageBox.Show("Se encontro registro flotante a eliminar en posicion: " + l);
+                                                listaRegistros.Add(l);
+                                                listaO.Add(l);
+                                            }
                                         }
+                                        
                                     }
                                     
 
@@ -745,66 +834,89 @@ namespace _OLC1_Proyecto1_201602869.Analizadores
                                     // ver > , < , >= , <=, = , != 
                                     if (condicionalEliminar.Equals(">"))
                                     {
-                                        
-                                        int datoCol = Int32.Parse(datoEnCol);
-                                        if (datoCol > condicionEliminarNumeroEntero)
+                                        if (!datoEnCol.Equals(""))
                                         {
-                                            //MessageBox.Show("Se encontro registro entero a eliminar en posicion: " + l);
-                                            listaRegistros.Add(l);
-                                            listaO.Add(l);
+                                            int datoCol = Int32.Parse(datoEnCol);
+                                            if (datoCol > condicionEliminarNumeroEntero)
+                                            {
+                                                //MessageBox.Show("Se encontro registro entero a eliminar en posicion: " + l);
+                                                listaRegistros.Add(l);
+                                                listaO.Add(l);
+                                            }
                                         }
+                                        
                                     }
                                     else if (condicionalEliminar.Equals("<"))
                                     {
-                                        int datoCol = Int32.Parse(datoEnCol);
-                                        if (datoCol < condicionEliminarNumeroEntero)
+                                        if (!datoEnCol.Equals(""))
                                         {
-                                           // MessageBox.Show("Se encontro registro entero a eliminar en posicion: " + l);
-                                            listaRegistros.Add(l);
-                                            listaO.Add(l);
+                                            int datoCol = Int32.Parse(datoEnCol);
+                                            if (datoCol < condicionEliminarNumeroEntero)
+                                            {
+                                                // MessageBox.Show("Se encontro registro entero a eliminar en posicion: " + l);
+                                                listaRegistros.Add(l);
+                                                listaO.Add(l);
+                                            }
                                         }
+                                        
                                     }
                                     else if (condicionalEliminar.Equals(">="))
                                     {
-                                        int datoCol = Int32.Parse(datoEnCol);
-                                        if (datoCol >= condicionEliminarNumeroEntero)
+                                        if (!datoEnCol.Equals(""))
                                         {
-                                            //MessageBox.Show("Se encontro registro entero a eliminar en posicion: " + l);
-                                            listaRegistros.Add(l);
-                                            listaO.Add(l);
+                                            int datoCol = Int32.Parse(datoEnCol);
+                                            if (datoCol >= condicionEliminarNumeroEntero)
+                                            {
+                                                //MessageBox.Show("Se encontro registro entero a eliminar en posicion: " + l);
+                                                listaRegistros.Add(l);
+                                                listaO.Add(l);
+                                            }
                                         }
+                                        
                                     }
                                     else if (condicionalEliminar.Equals("<="))
                                     {
-                                        int datoCol = Int32.Parse(datoEnCol);
-                                        if (datoCol <= condicionEliminarNumeroEntero)
+                                        if (!datoEnCol.Equals(""))
                                         {
-                                           // MessageBox.Show("Se encontro registro entero a eliminar en posicion: " + l);
-                                            listaRegistros.Add(l);
-                                            listaO.Add(l);
+                                            int datoCol = Int32.Parse(datoEnCol);
+                                            if (datoCol <= condicionEliminarNumeroEntero)
+                                            {
+                                                // MessageBox.Show("Se encontro registro entero a eliminar en posicion: " + l);
+                                                listaRegistros.Add(l);
+                                                listaO.Add(l);
+                                            }
                                         }
+                                        
                                     }
                                     else if (condicionalEliminar.Equals("="))
                                     {
-                                        int datoCol = Int32.Parse(datoEnCol);
-                                        if (datoCol == condicionEliminarNumeroEntero)
+                                        if (!datoEnCol.Equals(""))
                                         {
-                                            //indiceRegistro = l;
-                                           // MessageBox.Show("Se encontro registro entero a eliminar en posicion: " + l);
-                                            listaRegistros.Add(l);
-                                            listaO.Add(l);
+                                            int datoCol = Int32.Parse(datoEnCol);
+                                            if (datoCol == condicionEliminarNumeroEntero)
+                                            {
+                                                //indiceRegistro = l;
+                                                // MessageBox.Show("Se encontro registro entero a eliminar en posicion: " + l);
+                                                listaRegistros.Add(l);
+                                                listaO.Add(l);
+                                            }
                                         }
+                                        
                                     }
                                     else if (condicionalEliminar.Equals("!="))
                                     {
-                                        int datoCol = Int32.Parse(datoEnCol);
-                                        if (datoCol != condicionEliminarNumeroEntero)
+                                        if (!datoEnCol.Equals(""))
                                         {
-                                            //indiceRegistro = l;
-                                           // MessageBox.Show("Se encontro registro entero a eliminar en posicion: " + l);
-                                            listaRegistros.Add(l);
-                                            listaO.Add(l);
+                                            int datoCol = Int32.Parse(datoEnCol);
+                                            if (datoCol != condicionEliminarNumeroEntero)
+                                            {
+                                                //indiceRegistro = l;
+                                                // MessageBox.Show("Se encontro registro entero a eliminar en posicion: " + l);
+                                                listaRegistros.Add(l);
+                                                listaO.Add(l);
+                                            }
                                         }
+                                        
                                     }
                                 }
                                
@@ -1048,35 +1160,67 @@ namespace _OLC1_Proyecto1_201602869.Analizadores
         public void recuperar() {
             while (preanalisis.getNumToken()!= 5)
             {
+                if (numPreanalisis < Scanner.listaTokens.Count)
+                {
+                    numPreanalisis += 1;
+
+                    preanalisis = (Objeto.Token)Scanner.listaTokens[numPreanalisis];
+                    MessageBox.Show("Va consumiendo: " + preanalisis.getLexema());
+                }
+            }
+            try
+            {
+                preanalisis = (Objeto.Token)Scanner.listaTokens[numPreanalisis];
+            }
+            catch (Exception e)
+            {
+
 
             }
         }
      
         public void emparejar(int numToken) {
-            
-            if (numToken == preanalisis.getNumToken())
+            if (banderaRecu.Equals(true))
             {
-                // si se esperaba eso, esta bien, no se hace nada
-            }
-            else {
-                //error sintactico
-                //MessageBox.Show("Se esperaba: " + tokenTipo + " y viene:" + preanalisis.getTipo() + " en:" + numPreanalisis);
-
-                // crear error y guardarlo en lista errores
-                MessageBox.Show("Error sintactico, Se esperaba : " + numToken + " vino:" + preanalisis.getNumToken());
-            }
-            if (numPreanalisis < Scanner.listaTokens.Count) {
-                numPreanalisis += 1;
-                try
+                if (numToken == preanalisis.getNumToken())
                 {
-                    preanalisis = (Objeto.Token)Scanner.listaTokens[numPreanalisis];
+                    // si se esperaba eso, esta bien, no se hace nada
                 }
-                catch (Exception e)
+                else
                 {
+                    //error sintactico
+                    //MessageBox.Show("Se esperaba: " + tokenTipo + " y viene:" + preanalisis.getTipo() + " en:" + numPreanalisis);
+
+                    // crear error y guardarlo en lista errores
+                    MessageBox.Show("Error sintactico, Se esperaba : " + numToken + " vino:" + preanalisis.getNumToken());
+                    Objeto.ErrorLS errorLS = new Objeto.ErrorLS();
+                    errorLS.setTipo("Sintactico");
+                    errorLS.setLexema("No tenia que venir: " + preanalisis.getLexema());
+                    errorLS.setLinea(preanalisis.getLinea());
+                    errorLS.setColumna(preanalisis.getColumna());
+                    Scanner.listaErrores.Add(errorLS);
 
                     
+                    recuperar();
+                    banderaRecu = false;
+                }
+
+                if (numPreanalisis < Scanner.listaTokens.Count)
+                {
+                    numPreanalisis += 1;
+                    try
+                    {
+                        preanalisis = (Objeto.Token)Scanner.listaTokens[numPreanalisis];
+                    }
+                    catch (Exception e)
+                    {
+
+
+                    }
                 }
             }
+            else { }
+            
         }
 
     }
