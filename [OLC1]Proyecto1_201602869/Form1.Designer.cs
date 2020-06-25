@@ -183,20 +183,23 @@
             // manualUsuarioToolStripMenuItem
             // 
             this.manualUsuarioToolStripMenuItem.Name = "manualUsuarioToolStripMenuItem";
-            this.manualUsuarioToolStripMenuItem.Size = new System.Drawing.Size(187, 26);
+            this.manualUsuarioToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
             this.manualUsuarioToolStripMenuItem.Text = "Manual Usuario";
+            this.manualUsuarioToolStripMenuItem.Click += new System.EventHandler(this.manualUsuarioToolStripMenuItem_Click);
             // 
             // manualTecnicoToolStripMenuItem
             // 
             this.manualTecnicoToolStripMenuItem.Name = "manualTecnicoToolStripMenuItem";
-            this.manualTecnicoToolStripMenuItem.Size = new System.Drawing.Size(187, 26);
+            this.manualTecnicoToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
             this.manualTecnicoToolStripMenuItem.Text = "Manual Tecnico";
+            this.manualTecnicoToolStripMenuItem.Click += new System.EventHandler(this.manualTecnicoToolStripMenuItem_Click);
             // 
             // acercaDeToolStripMenuItem
             // 
             this.acercaDeToolStripMenuItem.Name = "acercaDeToolStripMenuItem";
-            this.acercaDeToolStripMenuItem.Size = new System.Drawing.Size(187, 26);
+            this.acercaDeToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
             this.acercaDeToolStripMenuItem.Text = "Acerca De";
+            this.acercaDeToolStripMenuItem.Click += new System.EventHandler(this.acercaDeToolStripMenuItem_Click);
             // 
             // openFileDialog1
             // 

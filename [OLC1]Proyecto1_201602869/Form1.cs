@@ -642,5 +642,22 @@ namespace _OLC1_Proyecto1_201602869
                 }
             }
         }
+
+        private void manualUsuarioToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            String pathErrores = Path.Combine(Application.StartupPath, "ManualUsuario.pdf");
+            Process.Start(pathErrores);
+        }
+
+        private void manualTecnicoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            String pathErrores = Path.Combine(Application.StartupPath, "ManualTecnico.pdf");
+            Process.Start(pathErrores);
+        }
+
+        private void acercaDeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Realizado por: Randall Chriss Ramos Saucedo / 201602869");
+        }
     }
 }
